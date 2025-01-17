@@ -10,9 +10,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://www.jitpack.io' }
     }
 }
 
-rootProject.name = "AppGithub2"
+rootProject.name = "AppGithubJitpack"
 include ':app'
 include ':library'

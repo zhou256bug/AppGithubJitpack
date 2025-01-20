@@ -1,6 +1,10 @@
 plugins {
     id 'com.android.library'
+    id 'maven-publish'
 }
+
+group = 'io.github.zhou256bug'
+version = '3.0'
 
 android {
     namespace 'com.desert.android.library'
@@ -23,6 +27,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier.set("sources")
 }
 
 dependencies {
@@ -32,4 +47,18 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.release
+                groupId = 'io.github.zhou256bug'
+                artifactId = 'EasyToast'
+                version = '3.0'
+            }
+        }
+    }
 }
